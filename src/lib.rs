@@ -3,7 +3,7 @@ use std::io::Read;
 use std::collections::HashMap;
 
 use pyo3::prelude::*;
-use pyo3::wrap_pyfunction;
+//use pyo3::wrap_pyfunction;
 
 /// Vocabulary for NLP applications
 ///
