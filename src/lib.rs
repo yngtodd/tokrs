@@ -1,6 +1,8 @@
 use std::path::Path;
 use std::collections::HashMap;
 
+use pyo3::prelude::*;
+
 /// Vocabulary for NLP applications
 ///
 /// This is a mapping from tokenized 

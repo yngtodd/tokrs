@@ -4,10 +4,11 @@ version = "0.1.0"
 authors = ["yngtodd <young.todd.mk@gmail.com>"]
 edition = "2018"
 
-[dependencies]
-rayon = "1.0.2"
-pyo3 = { path = "../..", features = ["extension-module"] }
-
 [lib]
 name = "tok"
 crate-type = ["cdylib"]
+
+[dependencies.pyo3]
+version = "0.13.1"
+features = ["extension-module"]
+
