@@ -15,7 +15,7 @@ pub struct Vocab {
     map: HashMap<String, i32>,
 }
 
-#[pymethods]
+//#[pymethods]
 impl Vocab {
     /// Create a Vocabulary
     /// 
@@ -40,7 +40,7 @@ impl Vocab {
 
     /// Read in a file
     pub fn read_file(fpath: &str) -> String {
-        let file = File::open(fpath).expect("Cannot open file!");
+        let mut file = File::open(fpath).expect("Cannot open file!");
         let mut contents = String::new();
         file.read_to_string(&mut contents).expect("Cannot read file!");
 
