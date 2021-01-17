@@ -2,16 +2,7 @@
 
 
 
-
-[![Build Status](https://travis-ci.com/yngtodd/tok.svg?branch=master)](https://travis-ci.com/yngtodd/tok)
-[![pypi](https://img.shields.io/pypi/v/tok.svg)](https://pypi.python.org/pypi/tok)
-
-
 Vocabulary building with Rust.
-
-
-* Free software: MIT license
-* Documentation: https://tok.readthedocs.io.
 
 
 #### Features
