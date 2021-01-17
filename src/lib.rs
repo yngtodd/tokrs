@@ -1,26 +1,30 @@
-use std::path::Path;
+use std::fs::File;
+use std::io::Read;
 use std::collections::HashMap;
 
 use pyo3::prelude::*;
+use pyo3::wrap_pyfunction;
 
 /// Vocabulary for NLP applications
 ///
 /// This is a mapping from tokenized 
 /// vocabulary terms to integer tokens.
+#[pyclass]
 pub struct Vocab {
     /// Mapping from tokens to integers
     map: HashMap<String, i32>,
 }
 
+#[pymethods]
 impl Vocab {
     /// Create a Vocabulary
     /// 
     /// # Arguments 
     /// 
     /// * `path` - Path to a raw text file to be parsed
-    pub fn new<P: AsRef<Path>>(path: P) -> Result<Vocab, std::io::Error> {
+    pub fn new(fpath: &str) -> Result<Vocab, std::io::Error> {
         let mut map = HashMap::new();
-        let contents = std::fs::read_to_string(path)?;
+        let contents = Vocab::read_file(fpath);
         let tokens = Vocab::tokenize(contents);
 
         let mut tok = 0;
@@ -33,6 +37,15 @@ impl Vocab {
 
         Ok(Vocab {map})
     }
+
+    /// Read in a file
+    pub fn read_file(fpath: &str) -> String {
+        let file = File::open(fpath).expect("Cannot open file!");
+        let mut contents = String::new();
+        file.read_to_string(&mut contents).expect("Cannot read file!");
+
+        contents
+    } 
 
     /// Tokenize raw text
     ///
@@ -57,9 +70,9 @@ impl Vocab {
     /// # Arguments
     /// 
     /// * `path` - Path to a saved vocabulary
-    pub fn load<P: AsRef<Path>>(path: P) -> Result<Vocab, std::io::Error> {
+    pub fn load(fpath: &str) -> Result<Vocab, std::io::Error> {
         let mut map = HashMap::new(); 
-        let contents = std::fs::read_to_string(path).expect("File not found!");
+        let contents = Vocab::read_file(fpath);
 
         for line in contents.lines() {
             let mut chunks = line.splitn(2, '\t');
@@ -84,7 +97,7 @@ impl Vocab {
     /// # Arguments 
     /// 
     /// * `path` - path to save the vocabulary tsv file 
-    pub fn write<P: AsRef<Path>>(&self, path: P) -> std::io::Result<()> {
+    pub fn write(&self, fpath: &str) -> std::io::Result<()> {
         let mut contents = String::new();
         for (voc, tok) in &self.map {
             contents.push_str(voc);
@@ -93,7 +106,7 @@ impl Vocab {
             contents.push('\n');
         }
 
-        std::fs::write(path, contents)
+        std::fs::write(fpath, contents)
     }
 
     /// Get the number of vocabulary terms
