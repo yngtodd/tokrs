@@ -12,3 +12,8 @@ crate-type = ["cdylib"]
 version = "0.13.1"
 features = ["extension-module"]
 
+[target.x86_64-apple-darwin]
+rustflags = [
+  "-C", "link-arg=-undefined",
+  "-C", "link-arg=dynamic_lookup",
+]
