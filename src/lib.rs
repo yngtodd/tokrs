@@ -119,7 +119,7 @@ impl Vocab {
 }
 
 #[pymodule]
-fn vocab(_py: Python<'_>, m: &PyModule) -> PyResult<()> {
+fn tok(_py: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_class::<Vocab>()?;
     Ok(())
 }
