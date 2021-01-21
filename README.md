@@ -7,8 +7,8 @@ Vocabulary building with Rust.
 
 #### Features
 
-Tok comes with a built in command line interface:
+``````
+from tok import Vocab
 
-```python
-python -m tok.cli greet
-```
+
+``````
