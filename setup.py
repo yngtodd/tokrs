@@ -10,12 +10,8 @@ with open('README.md') as readme_file:
 
 setup_requirements = ['pytest-runner', ]
 test_requirements = ['pytest>=3', ]
-requirements = ['argh',]
+requirements = []
 
-
-COMMANDS = [
-    'greet = tok.cli:greet',
-]
 
 setup(
     author="Todd Young",
@@ -31,14 +27,12 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
     description="Vocabulary building with Rust.",
-    entry_points={'console_scripts': COMMANDS},
     install_requires=requirements,
     license="MIT license",
     long_description=readme,
     include_package_data=True,
     keywords='tok',
     name='tok',
-    #packages=find_packages(include=['tok', 'tok.*']),
     rust_extensions=[RustExtension("tok", "Cargo.toml", debug=False)],
     setup_requires=setup_requirements,
     test_suite='tests',
