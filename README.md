@@ -7,8 +7,7 @@ Vocabulary building with Rust.
 
 #### Features
 
-``````
+``````python
 from tok import Vocab
-
 
 ``````
