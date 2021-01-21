@@ -3,7 +3,6 @@ use std::io::Read;
 use std::collections::HashMap;
 
 use pyo3::prelude::*;
-//use pyo3::wrap_pyfunction;
 
 /// Vocabulary for NLP applications
 ///
@@ -15,14 +14,15 @@ pub struct Vocab {
     map: HashMap<String, i32>,
 }
 
-//#[pymethods]
+#[pymethods]
 impl Vocab {
     /// Create a Vocabulary
     /// 
     /// # Arguments 
     /// 
-    /// * `path` - Path to a raw text file to be parsed
-    pub fn new(fpath: &str) -> Result<Vocab, std::io::Error> {
+    /// * `path` - Path to a raw text file to be parsedA
+    #[new]
+    pub fn new(fpath: &str) -> PyResult<Self> { //Result<Vocab, std::io::Error> {
         let mut map = HashMap::new();
         let contents = Vocab::read_file(fpath);
         let tokens = Vocab::tokenize(contents);
@@ -39,6 +39,7 @@ impl Vocab {
     }
 
     /// Read in a file
+    #[staticmethod]
     pub fn read_file(fpath: &str) -> String {
         let mut file = File::open(fpath).expect("Cannot open file!");
         let mut contents = String::new();
@@ -55,6 +56,7 @@ impl Vocab {
     /// # Arguments
     /// 
     /// * `text` - raw text String from which a vocabulary is built
+    #[staticmethod]
     pub fn tokenize(text: String) -> Vec<String> {
         let tokens: Vec<String> = text.split(|c: char| !(c.is_alphanumeric() || c == '\''))
                                       .filter(|s| !s.is_empty())
@@ -70,6 +72,7 @@ impl Vocab {
     /// # Arguments
     /// 
     /// * `path` - Path to a saved vocabulary
+    #[staticmethod]
     pub fn load(fpath: &str) -> Result<Vocab, std::io::Error> {
         let mut map = HashMap::new(); 
         let contents = Vocab::read_file(fpath);
@@ -113,13 +116,12 @@ impl Vocab {
     pub fn size(&self) -> usize {
         self.map.len()
     }
+}
 
-    /// Print the contents of the database
-    pub fn show(&self) {
-        for (voc, tok) in &self.map {
-            println!("  KEY: {}, VALUE: {}", voc, tok);
-        }
-    }
+#[pymodule]
+fn vocab(_py: Python<'_>, m: &PyModule) -> PyResult<()> {
+    m.add_class::<Vocab>()?;
+    Ok(())
 }
 
 #[cfg(test)]

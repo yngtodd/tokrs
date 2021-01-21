@@ -1,5 +1,7 @@
 from setuptools import setup, find_packages
-from setuptools_rust import RustExtension
+from setuptools_rust import (
+    RustExtension, Binding
+)
 
 
 with open('README.md') as readme_file:
@@ -37,7 +39,7 @@ setup(
     keywords='tok',
     name='tok',
     packages=find_packages(include=['tok', 'tok.*']),
-    rust_extensions=[RustExtension("tok.tok", "Cargo.toml", debug=False)],
+    rust_extensions=[RustExtension("tok.tok", "Cargo.toml", debug=False, binding=Binding.Py03)],
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
