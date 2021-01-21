@@ -22,7 +22,7 @@ impl Vocab {
     /// 
     /// * `path` - Path to a raw text file to be parsedA
     #[new]
-    pub fn new(fpath: &str) -> PyResult<Self> { //Result<Vocab, std::io::Error> {
+    pub fn new(fpath: &str) -> PyResult<Self> { 
         let mut map = HashMap::new();
         let contents = Vocab::read_file(fpath);
         let tokens = Vocab::tokenize(contents);
